@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1023110912801",
+    "project_id": "passport-12f1f",
+    "storage_bucket": "passport-12f1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023110912801:android:bb105df805516ed6153c60",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023110912801-1s2arpq79d27rpa8pahgl9j509l538ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ-wW779s-DNZLX80zkl4Eim2U5CHhON8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023110912801-1s2arpq79d27rpa8pahgl9j509l538ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
