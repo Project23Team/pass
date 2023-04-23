@@ -56,7 +56,7 @@ class _CommentState extends State<Comment> {
           ),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[
@@ -225,7 +225,7 @@ class _CommentState extends State<Comment> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) {
-                                            return Home();
+                                            return Home(u_name: name,u_password: passwordup,u_phone: phone,);
                                           }));
                                           setState(() {
                                             name = c_nameController.text;

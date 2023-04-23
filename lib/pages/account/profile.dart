@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/classes/language_constants.dart';
+import 'package:myapp/dataa.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/pages/home/view.dart';
 import 'package:myapp/pages/tt.dart';
@@ -22,7 +23,7 @@ class UserProfilePage extends StatelessWidget {
         title: GestureDetector(
           child:Text(translation(context).homePage,style: TextStyle(color:Colors.white),),
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home(u_name: name,u_password: password,u_phone: phone,)));
           },
         ),
         actions: <Widget>[
@@ -68,6 +69,7 @@ class UserProfilePage extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Color(0xff003b57),
+              child: Icon( Icons.account_circle_outlined,size: 35,color: Colors.white, ),
               radius: 50,
             ),
             SizedBox(height: 20),

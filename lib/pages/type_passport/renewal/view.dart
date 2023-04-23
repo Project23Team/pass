@@ -134,7 +134,7 @@ class _RenewpassportState extends State<Renewpassport> {
           ),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[

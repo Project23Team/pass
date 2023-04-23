@@ -11,11 +11,13 @@ import 'package:myapp/pages/signin/view.dart';
 import 'package:myapp/pages/signup/view.dart';
 import 'package:http/http.dart';
 import 'package:myapp/pages/splash/view.dart';
+import 'package:myapp/web_admin/presentation/main_page/view/main_page.dart';
 
 import '../../dataa.dart';
 
 var nameController=TextEditingController();
 var phoneController=TextEditingController();
+var passwordController=TextEditingController();
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -28,6 +30,8 @@ class _LoginState extends State<Login> {
   var x = "test";
   var y = "11";
   bool chick = false;
+  
+  
   Future getData() async{
     var url=Uri.parse("http://localhost:4000/log");
     Response response= await get(url);
@@ -39,14 +43,15 @@ class _LoginState extends State<Login> {
     for (int i=0; i<list1.length; i++){
       litems.add(list1[i]["name"]);
       litems.add(list1[i]["phone"]);
+      litems.add(list1[i]["password"]);
       setState(() {
         // if the name in mySql == name you inter
-        if((list1[i]["u_name"])==name&&list1[i]["u_phone"]==phone){
+        if((list1[i]["u_name"])==name&&list1[i]["u_phone"]==phone&&list1[i]["u_password"]==password){
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Home()));
+              builder: (context) => Home(u_name: name,u_password: password,u_phone: phone,)));
         }
 
-       else if((list1[i]["u_name"])!=name&&list1[i]["u_phone"]!=phone){
+       else if((list1[i]["u_name"])!=name&&list1[i]["u_phone"]!=phone&&list1[i]["u_password"]!=password){
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => signup()));
         }
@@ -70,11 +75,12 @@ class _LoginState extends State<Login> {
     for (int i=0; i<list1.length; i++){
       litems.add(list1[i]["name"]);
       litems.add(list1[i]["phone"]);
+      //litems.add(list1[i]["password"]);
       setState(() {
         // if the name in mySql == name you inter
         if((list1[i]["name"])==name&&list1[i]["phone"]==phone){
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Managerr()));
+              builder: (context) => MainPage()));
         }
 
         //else
@@ -238,6 +244,26 @@ class _LoginState extends State<Login> {
                         ),
                       ),
 
+                      SizedBox(height: 20,),
+                    TextField(
+                      controller: passwordController,
+                        maxLength: 11,
+                        //textAlign: TextAlign.right,
+                        cursorColor: Color(0xffffffff),
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          counterStyle: TextStyle(color: Colors.white,fontSize: 12,),
+                          fillColor: Colors.grey.withOpacity(0.3), filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+
+                          hintText: translation(context).password,
+
+
+                        ),
+                      ),
+
 
                     Padding(
                       padding: const EdgeInsets.all(10),
@@ -294,6 +320,7 @@ class _LoginState extends State<Login> {
                           setState(() {
                             name=nameController.text;
                             phone=phoneController.text;
+                            password=passwordController.text;
                           });
                           //getmanagerr();
                           getData();

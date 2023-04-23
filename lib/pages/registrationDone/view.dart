@@ -67,7 +67,7 @@ class _RegistrationDoneState extends State<RegistrationDone> {
           child: Text(translation(context).homePage),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(u_name: nameup,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[
@@ -165,9 +165,8 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                             ),
                             Center(
                               child: QrImage(
-                                // data:"name :"+name[index]+"    ",
-
-                                data:status[index] +"   "+u_phone[index],
+                                //data:status[index] +"   "+u_phone[index],
+                                data: "phone is :"+phone,
 
                                 size: 280,
                                 // You can include embeddedImageStyle Property if you

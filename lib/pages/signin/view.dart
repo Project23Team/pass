@@ -127,7 +127,7 @@ class _SigninState extends State<Signin> {
         title: GestureDetector(
           child:Text(translation(context).homePage,style: TextStyle(color:Colors.white),),
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home(u_name: name,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[

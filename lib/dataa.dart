@@ -33,4 +33,5 @@ var image2="";
 var user_id="";
 var comm="";
 var newstatus="1";
+var password="";
 

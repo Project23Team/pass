@@ -204,7 +204,7 @@ class _signupState extends State<signup> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Home()));
+                            MaterialPageRoute(builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
                         setState(() {
                           nameup = c_nameController.text;
                           phoneup = c_phoneController.text;

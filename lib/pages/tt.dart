@@ -61,7 +61,7 @@ class _proState extends State<pro> {
           ),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[
@@ -230,7 +230,7 @@ class _proState extends State<pro> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) {
-                                            return Home();
+                                            return Home(u_name: name,u_password: passwordup,u_phone: phone,);
                                           }));
                                           setState(() {
                                             u_name = c_nameController.text;

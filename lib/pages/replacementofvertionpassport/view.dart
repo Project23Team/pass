@@ -160,7 +160,7 @@ class _VertionpassportState extends State<Vertionpassport> {
           ),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
           },
         ),
         actions: <Widget>[

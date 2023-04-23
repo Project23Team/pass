@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/dataa.dart';
 import 'package:myapp/pages/account/profile.dart';
 import 'package:myapp/pages/home/carousel.dart';
 import 'package:myapp/pages/registrationDone/view.dart';
@@ -29,7 +30,11 @@ final List<String> imgList = [
   ];
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+ final String u_name;
+  final String u_phone;
+  final String u_password;
+
+  Home({required this.u_name, required this.u_phone, required this.u_password});
 
   @override
   State<Home> createState() => _HomeState();
@@ -43,7 +48,7 @@ class _HomeState extends State<Home> {
   var nameitems= [];
   var phoneitems = [];
   var passworditems = [];
-  
+  /*
   Future getData() async{
     var url=Uri.parse("http://localhost:4000/log");
     Response response= await get(url);
@@ -78,7 +83,7 @@ for (int i=0; i<list1.length; i++){
     super.initState();
     getData();
   }
-  
+  */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,9 +91,7 @@ for (int i=0; i<list1.length; i++){
         backgroundColor: Color(0xff003b57),
         title: GestureDetector(
           child:Text(translation(context).homePage,style: TextStyle(color:Colors.white),),
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-          },
+          
         ),
         actions: <Widget>[
           Padding(
@@ -140,7 +143,7 @@ for (int i=0; i<list1.length; i++){
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount:2,
+              itemCount:1,
               itemBuilder: (BuildContext context, int index){
                 return Column(
             children: [
@@ -172,9 +175,9 @@ for (int i=0; i<list1.length; i++){
                           ),
                         ),
                          GestureDetector(
-                  child: Icon( Icons.account_circle_outlined, ),
+                  child: Icon( Icons.account_circle_outlined,size: 35,color: Colors.white, ),
                   onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfilePage(u_name: nameitems[index],u_password: passworditems[index],u_phone: phoneitems[index],)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfilePage(u_name: name,u_password: password,u_phone: phone,)));
                             },
 
                  ),
@@ -296,7 +299,7 @@ for (int i=0; i<list1.length; i++){
                                     padding: const EdgeInsets.only(left: 5,right: 5),
                                     child: Text(translation(context).passportAcquisitionForm,
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold
                                       ),),
@@ -459,7 +462,7 @@ for (int i=0; i<list1.length; i++){
                     ),
 
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 30,),
                   //----
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -467,93 +470,14 @@ for (int i=0; i<list1.length; i++){
                     color: Color(0xff38b0d2),
                   ),
                   //General instructions
-                  SizedBox(height: 25,),
-                  Text(translation(context).generalInstructions,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
-                    child: Text(translation(context).basicInstructions,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
-                  ),
+                  
+                  
                   
                 ],
               ),
 
 
-              /*
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Container(
-                  height: 350 ,width: MediaQuery.of(context).size.width,
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 120,width: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(blurRadius: 8,spreadRadius: 10 ,color: Colors.black26)
-                          ],
-                          image: DecorationImage(
-                            image: AssetImage("images/courthouse.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(translation(context).directorateOfPassports,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black)),
-                      SizedBox(height: 5,),
-                      GestureDetector(
-                          child: Text(translation(context).readMore,style:TextStyle(fontSize: 17.0 ,fontWeight:FontWeight.bold,color: Colors.black) ,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              chick = !chick;
-                            });
-                          }
-                      ),
-                            Visibility(
-                              visible: chick,
-                              child: Container(
-                                  child :  Text(
-                                    translation(context).theseServicesOfferThePossibilityOfRegistrationAllowsThePossibilityOfSubmittingAndManagingPassportTransactionsInAnEasyAndEfficientWay
-                                    ,maxLines: 20, style: TextStyle(fontSize: 16.0 ,fontWeight:FontWeight.bold,color: Colors.black) , )
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-              ),
-
-               */
-/*
-              Container(
-                    color: Colors.black45,
-                    width: MediaQuery.of(context).size.width, height: 400,
-                    child: Row(
-                      children: [
-                        Servecpost("images/courthouse.png",translation(context).directorateOfPassports,translation(context).theseServicesOfferThePossibilityOfRegistrationAllowsThePossibilityOfSubmittingAndManagingPassportTransactionsInAnEasyAndEfficientWay),
-                        SizedBox(width: 5,),
-                        Servecpost("images/wifi-taxi.png",translation(context).deliveryService,translation(context).theseServicesOfferThePossibilityOfRegistrationAllowsThePossibilityOfSubmittingAndManagingPassportTransactionsInAnEasyAndEfficientWay),
-                      ],
-                    ),
-                  ),
-
-       SizedBox(height:1,),
-       Container(
-         color: Colors.orange,
-         width: MediaQuery.of(context).size.width, height: 650,
-         child: Row(
-           children: [
-             Servecpost("images/politics.png",translation(context).passportAcquisitionForm,translation(context).inOrderToOvercomeTheDifficultiesAndFacilitateTheProceduresForObtainingThePassportForTheCitizen),
-            SizedBox(width: 5,),
-             Servecpost("images/electronserv.png", translation(context).eServices, translation(context).toFacilitateTheMomentumInTheDepartmentsAndToFacilitateDealing)
-           ],
-         ),
-       ),
-
-               */
+             
 
            
             ]    

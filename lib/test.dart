@@ -257,7 +257,7 @@ class _SsState extends State<Ss> {
                       ElevatedButton(
                         onPressed: (){
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Home()));
+                              builder: (context) => Home(u_name: name,u_password: passwordup,u_phone: phone,)));
                           setState(() {
                             email=c_emailController.text;
                             address=c_addressController.text;

@@ -18,6 +18,8 @@ import 'package:myapp/pages/type_passport/newpassport/view.dart';
 import 'package:myapp/pages/type_passport/renewal/view.dart';
 import 'package:myapp/pages/type_passport/replacementOfLosePassport/view.dart';
 import 'package:myapp/test.dart';
+import 'package:myapp/web_admin/presentation/main_page/view/main_page.dart';
+import 'package:myapp/web_admin/presentation/new_passport_page/view/new_passport_admin.dart';
 
 import 'classes/language_constants.dart';
 
@@ -65,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      home: Home(),
+      home: Login(),
     );
   }
 }
