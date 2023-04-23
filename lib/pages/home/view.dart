@@ -1,7 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+
+
 import 'package:http/http.dart';
+import 'package:flutter/material.dart';
+import 'package:myapp/pages/account/profile.dart';
 import 'package:myapp/pages/home/carousel.dart';
 import 'package:myapp/pages/registrationDone/view.dart';
 import 'package:myapp/pages/replacementofvertionpassport/view.dart';
@@ -37,13 +40,12 @@ class _HomeState extends State<Home> {
   bool chick2 = true;
   bool chick3 = false;
   bool chick4 = false;
-
-  //post comm
-  var litems= [];
+  var nameitems= [];
   var phoneitems = [];
-  var commitems = [];
+  var passworditems = [];
+  
   Future getData() async{
-    var url=Uri.parse("http://localhost:4000/getcomment");
+    var url=Uri.parse("http://localhost:4000/log");
     Response response= await get(url);
 
     String body =response.body;
@@ -52,16 +54,21 @@ class _HomeState extends State<Home> {
     List<dynamic> list2=json.decode(body);
 
     print(list1);
-    litems.clear();  //to not print the items in litems just print value in mySql colum(name ,phone,..)
+    nameitems.clear();  //to not print the items in litems just print value in mySql colum(name ,phone,..)
     //items.clear();
     for (int i=0; i<list1.length; i++){
-     litems.add(list1[i]["name"]);
-     phoneitems.add(list1[i]["phone"]);
-     commitems.add(list1[i]["comm"]);
+     nameitems.add(list1[i]["u_name"]);
+     phoneitems.add(list1[i]["u_phone"]);
+     passworditems.add(list1[i]["u_password"]);
      
 
      setState(() {
+for (int i=0; i<list1.length; i++){
+        nameitems.add(list1[i]["u_name"]);
+        phoneitems.add(list1[i]["u_phone"]);
+        passworditems.add(list1[i]["u_password"]);
 
+      }
       });
     }
     print(list1);//to print my databace in run
@@ -71,6 +78,7 @@ class _HomeState extends State<Home> {
     super.initState();
     getData();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,16 +127,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+      body:  Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topRight,
@@ -136,29 +137,17 @@ class _HomeState extends State<Home> {
                   colors: [Color(0xff06283D), Color(0xff06283D)])
           ),
           child:
-          ListView(
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount:2,
+              itemBuilder: (BuildContext context, int index){
+                return Column(
             children: [
               Column(
                 children: [
                   CarouselWithDotsPage(imgList: imgList),
-                  /*
-                  Container(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-
-                        //rowBox("images/logo.png"),
-                        rowBox("images/pass.jpg"),
-                        rowBox("images/pass2.jpg"),
-                        rowBox("images/pass3.jpg"),
-                        rowBox("images/p4.jpg"),
-                      ],
-
-                    ),
-                  ),
-
-                   */
+                
                   Padding(
                     padding: const EdgeInsets.only(
                         top: 50, bottom: 10, left: 10, right: 10),
@@ -182,6 +171,13 @@ class _HomeState extends State<Home> {
                                     color: Colors.white,)),
                           ),
                         ),
+                         GestureDetector(
+                  child: Icon( Icons.account_circle_outlined, ),
+                  onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfilePage(u_name: nameitems[index],u_password: passworditems[index],u_phone: phoneitems[index],)));
+                            },
+
+                 ),
                       ],
                     ),
                   ),
@@ -464,7 +460,7 @@ class _HomeState extends State<Home> {
 
                   ),
                   SizedBox(height: 10,),
-                  //////////////////////////////////----
+                  //----
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 3,
@@ -477,187 +473,7 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
                     child: Text(translation(context).basicInstructions,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
                   ),
-                  Container(
-                    height: 180,
-                    child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              margin: EdgeInsetsDirectional.all(20),
-                              width: 250, height: 120,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff38b0d2),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(blurRadius: 9,
-                                        spreadRadius: 10,
-                                        color: Colors.grey.withOpacity(0.4),
-                                        offset: Offset(5, 5))
-                                  ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 5),
-                                    child: Icon(
-                                      Icons.water, size: 40, color: Colors
-                                        .black,),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
-                                    child: Text(translation(context).maritimePassport,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold
-                                      ),),
-                                  ),
-                                  Text(translation(context).readMore, style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ServicesDetails()));
-                            },
-                          ),
-                          GestureDetector(
-                            child:Container(
-                              margin: EdgeInsetsDirectional.all(20),
-                              width: 250, height: 120,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(blurRadius: 9,
-                                        spreadRadius: 7,
-                                        color: Colors.grey.withOpacity(0.6),
-                                        offset: Offset(5,5))
-                                  ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 5),
-                                    child: Icon(
-                                      Icons.important_devices_outlined, size: 40, color: Colors
-                                        .black,),
-                                  ),
-                                  Text(translation(context).eServices,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold
-                                    ),),
-                                  Text(translation(context).readMore, style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Eservices()));
-                            },
-                          ),
-                          GestureDetector(
-                            child:  Container(
-                              margin: EdgeInsetsDirectional.all(20),
-                              width: 150, height: 120,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(blurRadius: 9,
-                                        spreadRadius: 7,
-                                        color: Colors.grey.withOpacity(0.6),
-                                        offset: Offset(5,5))
-                                  ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 5),
-                                    child: Icon(
-                                      Icons.ballot, size: 40, color: Colors
-                                        .black,),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Text(translation(context).passportAcquisitionForm,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold
-                                      ),),
-                                  ),
-                                  Text(translation(context).readMore, style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PassportAcquisitionForm()));
-                            },
-                          ),
-
-                          GestureDetector(
-                            child: Container(
-                              margin: EdgeInsetsDirectional.all(20),
-                              width: 150, height: 120,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(blurRadius: 9,
-                                        spreadRadius: 7,
-                                        color: Colors.grey.withOpacity(0.6),
-                                        offset: Offset(5,5))
-                                  ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 5),
-                                    child: Icon(
-                                      Icons.fingerprint, size: 40, color: Colors
-                                        .black,),
-                                  ),
-                                  Text(translation(context).fingerprint,
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold
-                                    ),),
-                                  Text(translation(context).readMore, style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Fingerprint()));
-                            },
-                          ),
-
-
-                        ]
-                    ),
-                  ),
+                  
                 ],
               ),
 
@@ -739,11 +555,13 @@ class _HomeState extends State<Home> {
 
                */
 
-            ],
-          ),
-        ),
-      ),
-
+           
+            ]    
+        );
+              }
+  
+)
+)
     );
   }
   Container rowBox(String img){
@@ -883,5 +701,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  
 }

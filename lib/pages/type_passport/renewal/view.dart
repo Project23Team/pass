@@ -56,57 +56,42 @@ class _RenewpassportState extends State<Renewpassport> {
   String? urlImage;
   PickedFile? pickerImage;
   String status = "";
- Future<void> addData() async {
-  // Upload images to Firebase Storage
-  
-  // Create JSON object with form data and image URLs
-  final data = {
-    "rn_email": email,
-    "rn_placeOforder": placeOforder,
-    "rn_typeOfmarrige": typeOfmarrige,
-    "rn_sex": sex,
-    "rn_placeOfbirth": placeOfbirth,
-    "rn_firstname": firstname,
-    "rn_fathersName": fathersName,
-    "rn_grandfatherName": grandfatherName,
-    "rn_surname": surname,
-    "rn_motherName": motherName,
-    "rn_motherFather": motherFather,
-    "rn_provinceCountry": provinceCountry,
-    "rn_maritalStatus": maritalStatus,
-    "rn_profession": profession,
-    "rn_dateOfbirth": dateOfbirth,
-    "rn_nationaliIDNumber": nationaliIDNumber,
-    "rn_phone": phone,
-    "rn_address": address,
-    "rn_image": urlImage
-  };
-  
-  final jsonData = json.encode(data);
+ Future Add_data() async {
+    var url = Uri.parse("http://localhost:4000/renew");
+    urlImage = await FirebaseStorageFiles.uploadImage(pickerImage);
+    Map<String, String> headers = {"Content-type": "application/json"};
 
-  // Send POST request to server
-  final url = Uri.parse("http://localhost:4000/renew");
-  final headers = {"Content-type": "application/json"};
-  final response = await http.post(url, headers: headers, body: jsonData);
+    String json = '{"rn_email": "$email",'
+        ' "rn_placeOforder": "$placeOforder",'
+        ' "rn_typeOfmarrige": "$typeOfmarrige",'
+        ' "rn_sex": "$sex",'
+        ' "rn_placeOfbirth": "$placeOfbirth",'
+        ' "rn_firstname": "$firstname",'
+        ' "rn_fathersName": "$fathersName",'
+        ' "rn_grandfatherName": "$grandfatherName",'
+        ' "rn_surname": "$surname",'
+        ' "rn_motherName": "$motherName",'
+        ' "rn_motherFather": "$motherFather",'
+        ' "rn_provinceCountry": "$provinceCountry",'
+        ' "rn_maritalStatus": "$maritalStatus",'
+        ' "rn_profession": "$profession",'
+        ' "rn_dateOfbirth": "$dateOfbirth",'
+        ' "rn_nationaliIDNumber": "$nationaliIDNumber",'
+        ' "rn_phone": "$phone",'
+        ' "rn_address": "$address",'
+        ' "rn_image": "$urlImage"}';
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+    // check the status code for the result
+    int statusCode = response.statusCode;
+    // this API passes back the id of the new item added to the body
+    String body1 = response.body;
+    var data = jsonDecode(body1);
+    print(data);
+    var res = data["code"];
 
-  // Check response status code
-  final statusCode = response.statusCode;
-
-  // If the response status code is OK (200),
-  // update the state with the response message
-  if (statusCode == 200) {
-    final body = response.body;
-    final decodedBody = json.decode(body);
-    final res = decodedBody["code"];
-
-    if (res == null) {
-      final message = decodedBody["message"];
-      setState(() {
-        status = message;
-      });
-    }
+    if (res == null) {}
   }
-}
 
   
 
@@ -953,6 +938,8 @@ class _RenewpassportState extends State<Renewpassport> {
                                         ),
                                       ],
                                     ),
+                                    //image
+                                    /*
                                     Padding(
                                       padding: const EdgeInsets.only(top: 15),
                                       child: Container(
@@ -966,51 +953,9 @@ class _RenewpassportState extends State<Renewpassport> {
                                         color: Colors.grey,
                                       ),
                                     ),
+                                    */
 
-                                    /*
-            MaterialButton(
-              onPressed: () {
-                if (_key.currentState != null &&
-                    _key.currentState!.validate()) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RegistrationDone()));
-
-                  setState(() {
-                    email = c_emailController.text;
-                    firstname=c_firstnameController.text;
-                    fathersName=c_fathersNameController.text;
-                    grandfatherName=c_grandfatherNameController.text;
-                    surname=c_surnameController.text;
-                    motherName=c_motherNameController.text;
-                    motherFather=c_motherFatherController.text;
-                    provinceCountry=c_provinceCountryController.text;
-                    maritalStatus=c_maritalStatusController.text;
-                    profession=c_professionController.text;
-                    dateOfbirth=c_dateOfbirthController.text;
-                    nationaliIDNumber=c_nationaliIDNumberController.text;
-                    phone=c_phoneController.text;
-                    address=c_addressController.text;
-                    //placeOforder = dropdownValue;
-                    Add_data();
-                  });
-                }
-              },
-              height: 50,
-              shape: const StadiumBorder(),
-              color: Theme
-                  .of(context)
-                  .primaryColor,
-              child: Center(
-                child: Text(
-                  translation(context).submitInfo,
-                  style: const TextStyle(
-                      color: Colors.white, fontSize: 20),
-                ),
-              ),
-
-            ),
-
-                */
+                                    
                                     Padding(
                                       padding: const EdgeInsets.all(50),
                                       child: ElevatedButton(
@@ -1018,34 +963,7 @@ class _RenewpassportState extends State<Renewpassport> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      RegistrationDone(
-                                                          email: email,
-                                                          placeOforder:
-                                                              placeOforder,
-                                                          typeOfmarrige:
-                                                              typeOfmarrige,
-                                                          sex: sex,
-                                                          firstname: firstname,
-                                                          fathersName:
-                                                              fathersName,
-                                                          grandfatherName:
-                                                              grandfatherName,
-                                                          surname: surname,
-                                                          motherName:
-                                                              motherName,
-                                                          motherFather:
-                                                              motherFather,
-                                                          provinceCountry:
-                                                              provinceCountry,
-                                                          maritalStatus:
-                                                              maritalStatus,
-                                                          profession:
-                                                              profession,
-                                                          dateOfbirth:
-                                                              dateOfbirth,
-                                                          nationaliIDNumber:
-                                                              nationaliIDNumber,
-                                                          address: address)));
+                                                      RegistrationDone(status: status,u_phone: phone,)));
                                           setState(() {
                                             email = c_emailController.text;
                                             firstname =
@@ -1084,7 +1002,7 @@ class _RenewpassportState extends State<Renewpassport> {
                                                 dropdownValuepdMaritalStatus;
 
                                             //place=placeOforder;
-                                            addData();
+                                            Add_data();
                                           });
                                         },
                                         child: Text(
@@ -1186,4 +1104,59 @@ Future Add_data() async {
 
     if (res == null) {}
   }
+  */
+
+
+  /*
+  Future<void> addData() async {
+  // Upload images to Firebase Storage
+  
+  // Create JSON object with form data and image URLs
+  final data = {
+    "rn_email": email,
+    "rn_placeOforder": placeOforder,
+    "rn_typeOfmarrige": typeOfmarrige,
+    "rn_sex": sex,
+    "rn_placeOfbirth": placeOfbirth,
+    "rn_firstname": firstname,
+    "rn_fathersName": fathersName,
+    "rn_grandfatherName": grandfatherName,
+    "rn_surname": surname,
+    "rn_motherName": motherName,
+    "rn_motherFather": motherFather,
+    "rn_provinceCountry": provinceCountry,
+    "rn_maritalStatus": maritalStatus,
+    "rn_profession": profession,
+    "rn_dateOfbirth": dateOfbirth,
+    "rn_nationaliIDNumber": nationaliIDNumber,
+    "rn_phone": phone,
+    "rn_address": address,
+    "rn_image": urlImage
+  };
+  
+  final jsonData = json.encode(data);
+
+  // Send POST request to server
+  final url = Uri.parse("http://localhost:4000/renew");
+  final headers = {"Content-type": "application/json"};
+  final response = await http.post(url, headers: headers, body: jsonData);
+
+  // Check response status code
+  final statusCode = response.statusCode;
+
+  // If the response status code is OK (200),
+  // update the state with the response message
+  if (statusCode == 200) {
+    final body = response.body;
+    final decodedBody = json.decode(body);
+    final res = decodedBody["code"];
+
+    if (res == null) {
+      final message = decodedBody["message"];
+      setState(() {
+        status = message;
+      });
+    }
+  }
+}
   */

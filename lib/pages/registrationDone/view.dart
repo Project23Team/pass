@@ -14,39 +14,11 @@ import '../../classes/language_constants.dart';
 import '../../main.dart';
 
 class RegistrationDone extends StatefulWidget {
-  final String email;
-  final String placeOforder;
-  final String typeOfmarrige;
-  final String sex;
-  final String firstname;
-  final String fathersName;
-  final String grandfatherName;
-  final String surname;
-  final String motherName;
-  final String motherFather;
-  final String provinceCountry;
-  final String maritalStatus;
-  final String profession;
-  final String dateOfbirth;
-  final String nationaliIDNumber;
-  final String address;
+  final String status;
+  final String u_phone;
   RegistrationDone({
-    required this.email,
-    required this.placeOforder,
-    required this.typeOfmarrige,
-    required this.sex,
-    required this.firstname,
-    required this.fathersName,
-    required this.grandfatherName,
-    required this.surname,
-    required this.motherName,
-    required this.motherFather,
-    required this.provinceCountry,
-    required this.maritalStatus,
-    required this.profession,
-    required this.dateOfbirth,
-    required this.nationaliIDNumber,
-    required this.address,
+    required this.status,
+   required this.u_phone,
   });
 
   @override
@@ -56,11 +28,11 @@ class RegistrationDone extends StatefulWidget {
 class _RegistrationDoneState extends State<RegistrationDone> {
   late final TextEditingController c_phoneController;
   var litems = [];
-  var email1 = [];
+  var status = [];
   var name = [];
-  var phone = [];
+  var u_phone = [];
   Future getData() async {
-    var url = Uri.parse(AppApis.lol);
+    var url = Uri.parse("http://localhost:4000/qr");
     Response response = await get(url);
 
     String body = response.body;
@@ -72,9 +44,8 @@ class _RegistrationDoneState extends State<RegistrationDone> {
 
     setState(() {
       for (int i = 0; i < list1.length; i++) {
-        //name.add(list1[i]["n_email"]);
-        phone.add(list1[i]["n_placeOforder"]);
-        email1.add(list1[i]["n_email"]);
+        u_phone.add(list1[i]["u_phone"]);
+        status.add(list1[i]["status"]);
       }
     });
     //print(imitems);//to print in my app
@@ -196,57 +167,7 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                               child: QrImage(
                                 // data:"name :"+name[index]+"    ",
 
-                                data: "email is" "  " +
-                                    email +
-                                    "   " +
-                                    "placeOforder" +
-                                    placeOforder +
-                                    "    " +
-                                    " typeOfmarrige:   " +
-                                    typeOfmarrige +
-                                    "         " +
-                                    "sex:  " +
-                                    sex +
-                                    "   " +
-                                    "placeOfbirth:   " +
-                                    placeOfbirth +
-                                    "        " +
-                                    "firstname:  " +
-                                    placeOfbirth +
-                                    "        " +
-                                    "fathersName:    " +
-                                    fathersName +
-                                    "        " +
-                                    "grandfatherName:   " +
-                                    grandfatherName +
-                                    "        "
-                                        "surname:   " +
-                                    surname +
-                                    "        " +
-                                    "motherName:  " +
-                                    motherName +
-                                    "        " +
-                                    "motherFather:    " +
-                                    motherFather +
-                                    "        " +
-                                    "provinceCountry:   " +
-                                    provinceCountry +
-                                    "        " +
-                                    "maritalStatus:    " +
-                                    maritalStatus +
-                                    "        " +
-                                    "profession:    " +
-                                    profession +
-                                    "        " +
-                                    "dateOfbirth:      " +
-                                    dateOfbirth +
-                                    "        " +
-                                    "nationaliIDNumber:   " +
-                                    nationaliIDNumber +
-                                    "        " +
-                                    "address:    " +
-                                    address +
-                                    "        ",
+                                data:status[index] +"   "+u_phone[index],
 
                                 size: 280,
                                 // You can include embeddedImageStyle Property if you

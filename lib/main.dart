@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
+import 'package:myapp/pages/account/profile.dart';
 import 'package:myapp/pages/comment/view.dart';
 import 'package:myapp/pages/generalinstructions/navalpassport/view.dart';
 import 'package:myapp/pages/home/view.dart';
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      home: RegistrationDone(address:" ee",dateOfbirth:" ww", email: "qq",fathersName: "qq",firstname: "ww",grandfatherName: "w",maritalStatus: "ww",motherFather: "ww",motherName: "ww",nationaliIDNumber: "ww",placeOforder: "w",profession: "ww",provinceCountry: "",sex: "",surname: "",typeOfmarrige: ""),
+      home: Home(),
     );
   }
 }

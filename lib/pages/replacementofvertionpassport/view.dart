@@ -1031,34 +1031,7 @@ class _VertionpassportState extends State<Vertionpassport> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      RegistrationDone(
-                                                          email: email,
-                                                          placeOforder:
-                                                              placeOforder,
-                                                          typeOfmarrige:
-                                                              typeOfmarrige,
-                                                          sex: sex,
-                                                          firstname: firstname,
-                                                          fathersName:
-                                                              fathersName,
-                                                          grandfatherName:
-                                                              grandfatherName,
-                                                          surname: surname,
-                                                          motherName:
-                                                              motherName,
-                                                          motherFather:
-                                                              motherFather,
-                                                          provinceCountry:
-                                                              provinceCountry,
-                                                          maritalStatus:
-                                                              maritalStatus,
-                                                          profession:
-                                                              profession,
-                                                          dateOfbirth:
-                                                              dateOfbirth,
-                                                          nationaliIDNumber:
-                                                              nationaliIDNumber,
-                                                          address: address)));
+                                                      RegistrationDone(status: "status",u_phone: phone,)));
                                           setState(() {
                                             email = c_emailController.text;
                                             firstname =

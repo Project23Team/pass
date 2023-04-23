@@ -61,60 +61,8 @@ class _NewpassportState extends State<Newpassport> {
   PickedFile? pickerImage1;
   PickedFile? pickerImage2;
 String status = "";
- Future<void> addData() async {
-  // Upload images to Firebase Storage
-  final urlImage1 = await FirebaseStorageFiles.uploadImage(pickerImage1);
-  final urlImage2 = await FirebaseStorageFiles.uploadImage(pickerImage2);
+ 
 
-  // Create JSON object with form data and image URLs
-  final data = {
-    "n_email": email,
-    "n_placeOforder": placeOforder,
-    "n_typeOfmarrige": typeOfmarrige,
-    "n_sex": sex,
-    "n_placeOfbirth": placeOfbirth,
-    "n_firstname": firstname,
-    "n_fathersName": fathersName,
-    "n_grandfatherName": grandfatherName,
-    "n_surname": surname,
-    "n_motherName": motherName,
-    "n_motherFather": motherFather,
-    "n_provinceCountry": provinceCountry,
-    "n_maritalStatus": maritalStatus,
-    "n_profession": profession,
-    "n_dateOfbirth": dateOfbirth,
-    "n_nationaliIDNumber": nationaliIDNumber,
-    "n_address": address,
-    "n_image": urlImage1,
-    "n_image2": urlImage2,
-  };
-  final jsonData = json.encode(data);
-
-  // Send POST request to server
-  final url = Uri.parse("http://localhost:4000/ss");
-  final headers = {"Content-type": "application/json"};
-  final response = await http.post(url, headers: headers, body: jsonData);
-
-  // Check response status code
-  final statusCode = response.statusCode;
-
-  // If the response status code is OK (200),
-  // update the state with the response message
-  if (statusCode == 200) {
-    final body = response.body;
-    final decodedBody = json.decode(body);
-    final res = decodedBody["code"];
-
-    if (res == null) {
-      final message = decodedBody["message"];
-      setState(() {
-        status = message;
-      });
-    }
-  }
-}
-
-/*
 //org
   Future Add_data() async {
     var url = Uri.parse("http://localhost:4000/ss");
@@ -154,44 +102,9 @@ String status = "";
 
     if (res == null) {}
   }
-  */
+  
   
 
-
-Future Add_data2() async {
-    var url = Uri.parse("http://localhost:4000/update");
-    urlImage1 = await FirebaseStorageFiles.uploadImage(pickerImage1);
-    urlImage2 = await FirebaseStorageFiles.uploadImage(pickerImage2);
-
-    Map<String, String> headers = {"Content-type": "application/json"};
-
-    String json = '{"status": "$status"}';
-    // make POST request
-    Response response = await put(url, headers: headers, body: json);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-    // this API passes back the id of the new item added to the body
-    String body1 = response.body;
-    var data = jsonDecode(body1);
-    print(data);
-    var res = data["code"];
-
-    if (res == null) {}
-  }
-
-
-Future updateData( String status) async {
-  var url = Uri.parse('http://localhost:4000/status');
-  var response = await http.put(url, body: {
-    'status': status,
-  });
-  if (response.statusCode == 200) {
-    var data = jsonDecode(response.body);
-    return data;
-  } else {
-    throw Exception('Failed to update data');
-  }
-}
 
 
 
@@ -1104,7 +1017,7 @@ Future updateData( String status) async {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) {
-                                            return Home();
+                                            return RegistrationDone(status: status,u_phone: phone,);
                                           }));
                                           setState(() {
                                             email = c_emailController.text;
@@ -1145,7 +1058,7 @@ Future updateData( String status) async {
 
                                             //place=placeOforder;
                                             //updateData( status);
-                                           addData();
+                                           Add_data();
                                           });
                                         },
                                         child: Text(

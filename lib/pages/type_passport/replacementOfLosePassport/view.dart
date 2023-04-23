@@ -55,56 +55,43 @@ class _LostpassportState extends State<Lostpassport> {
   String? urlImage;
   PickedFile? pickerImage;
   String status = "";
-  Future<void> addData() async {
-  urlImage = await FirebaseStorageFiles.uploadImage(pickerImage);
+  Future Add_data() async {
+    var url = Uri.parse("http://localhost:4000/lost");
+    urlImage = await FirebaseStorageFiles.uploadImage(pickerImage);
+    Map<String, String> headers = {"Content-type": "application/json"};
 
-  Map<String, String> headers = {"Content-type": "application/json"};
-  Map<String, dynamic> data = {
-    "L_email": email,
-    "L_placeOforder": placeOforder,
-    "L_typeOfmarrige": typeOfmarrige,
-    "L_sex": sex,
-    "L_placeOfbirth": placeOfbirth,
-    "L_firstname": firstname,
-    "L_fathersName": fathersName,
-    "L_grandfatherName": grandfatherName,
-    "L_surname": surname,
-    "L_motherName": motherName,
-    "L_motherFather": motherFather,
-    "L_provinceCountry": provinceCountry,
-    "L_maritalStatus": maritalStatus,
-    "L_profession": profession,
-    "L_dateOfbirth": dateOfbirth,
-    "L_nationaliIDNumber": nationaliIDNumber,
-    "L_phone": phone,
-    "L_address": address,
-    "L_image": urlImage
-  };
-  final jsonData = json.encode(data);
+    String json = '{"L_email": "$email",'
+        ' "L_placeOforder": "$placeOforder",'
+        ' "L_typeOfmarrige": "$typeOfmarrige",'
+        ' "L_sex": "$sex",'
+        ' "L_placeOfbirth": "$placeOfbirth",'
+        ' "L_firstname": "$firstname",'
+        ' "L_fathersName": "$fathersName",'
+        ' "L_grandfatherName": "$grandfatherName",'
+        ' "L_surname": "$surname",'
+        ' "L_motherName": "$motherName",'
+        ' "L_motherFather": "$motherFather",'
+        ' "L_provinceCountry": "$provinceCountry",'
+        ' "L_maritalStatus": "$maritalStatus",'
+        ' "L_profession": "$profession",'
+        ' "L_dateOfbirth": "$dateOfbirth",'
+        ' "L_nationaliIDNumber": "$nationaliIDNumber",'
+        ' "L_phone": "$phone",'
+        ' "L_address": "$address",'
+        ' "L_image": "$urlImage"}';
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+    // check the status code for the result
+    int statusCode = response.statusCode;
+    // this API passes back the id of the new item added to the body
+    String body1 = response.body;
+    var data = jsonDecode(body1);
+    print(data);
+    var res = data["code"];
 
-  // Send POST request to server
-  final url = Uri.parse("http://localhost:4000/lost");
-  //final headers = {"Content-type": "application/json"};
-  final response = await http.post(url, headers: headers, body: jsonData);
-
-  // Check response status code
-  final statusCode = response.statusCode;
-
-  // If the response status code is OK (200),
-  // update the state with the response message
-  if (statusCode == 200) {
-    final body = response.body;
-    final decodedBody = json.decode(body);
-    final res = decodedBody["code"];
-
-    if (res == null) {
-      final message = decodedBody["message"];
-      setState(() {
-        status = message;
-      });
-    }
+    if (res == null) {}
   }
-}
+
 
 
   String dropdownValue = "";
@@ -1015,34 +1002,7 @@ class _LostpassportState extends State<Lostpassport> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      RegistrationDone(
-                                                          email: email,
-                                                          placeOforder:
-                                                              placeOforder,
-                                                          typeOfmarrige:
-                                                              typeOfmarrige,
-                                                          sex: sex,
-                                                          firstname: firstname,
-                                                          fathersName:
-                                                              fathersName,
-                                                          grandfatherName:
-                                                              grandfatherName,
-                                                          surname: surname,
-                                                          motherName:
-                                                              motherName,
-                                                          motherFather:
-                                                              motherFather,
-                                                          provinceCountry:
-                                                              provinceCountry,
-                                                          maritalStatus:
-                                                              maritalStatus,
-                                                          profession:
-                                                              profession,
-                                                          dateOfbirth:
-                                                              dateOfbirth,
-                                                          nationaliIDNumber:
-                                                              nationaliIDNumber,
-                                                          address: address)));
+                                                      RegistrationDone(status: status,u_phone: phone, )));
                                           setState(() {
                                             email = c_emailController.text;
                                             firstname =
@@ -1081,7 +1041,7 @@ class _LostpassportState extends State<Lostpassport> {
                                                 dropdownValuepdMaritalStatus;
 
                                             //place=placeOforder;
-                                           addData();
+                                          Add_data();
                                           });
                                         },
                                         child: Text(
