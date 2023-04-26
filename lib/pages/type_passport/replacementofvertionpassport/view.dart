@@ -15,7 +15,7 @@ import 'package:myapp/pages/registrationDone/view.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../services/firebase_storage.dart';
+import '../../../services/firebase_storage.dart';
 
 var c_emailController = TextEditingController();
 var c_placeOforderController = TextEditingController();
@@ -55,7 +55,7 @@ class _VertionpassportState extends State<Vertionpassport> {
   PickedFile? pickerImage;
   var litems = [];
   Future Add_data() async {
-    var url = Uri.parse(AppApis.vertion);
+    var url = Uri.parse("http://localhost:4000/vertion");
     urlImage = await FirebaseStorageFiles.uploadImage(pickerImage);
     Map<String, String> headers = {"Content-type": "application/json"};
 
@@ -90,37 +90,7 @@ class _VertionpassportState extends State<Vertionpassport> {
 
     if (res == null) {}
   }
-  /*
-  Future getData() async{
-    var url=Uri.parse("http://localhost:4000/vertionview");
-    Response response= await get(url);
-    String body =response.body;
-//convert
-    List<dynamic> list1=json.decode(body);
-    print(list1);
-    //litems.clear();  //to not print the items in litems just print value in mySql colum(name ,phone,..)
-    for (int i=0; i<list1.length; i++){
-      litems.add(list1[i]["phone"]);
-      setState(() {
-        // if the name in mySql == name you inter
-        if(list1[i]["v_phone"]!=phone){
-          Add_data();
-        }
-
-        else
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Home()));
-
-      });
-
-    }
-    print(litems);
-
-
-  }
-
-   */
-
+ 
   String dropdownValue = "";
   String dropdownValue2 = '';
   String dropdownValueS = '';

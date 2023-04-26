@@ -6,9 +6,10 @@ import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/dataa.dart';
 import 'package:myapp/pages/account/profile.dart';
+import 'package:myapp/pages/comment/commview.dart';
 import 'package:myapp/pages/home/carousel.dart';
 import 'package:myapp/pages/registrationDone/view.dart';
-import 'package:myapp/pages/replacementofvertionpassport/view.dart';
+import 'package:myapp/pages/type_passport/replacementofvertionpassport/view.dart';
 import 'package:myapp/pages/servicesDetails/view.dart';
 import 'package:myapp/pages/signin/view.dart';
 import 'package:myapp/pages/type_passport/newpassport/view.dart';
@@ -46,11 +47,11 @@ class _HomeState extends State<Home> {
   bool chick3 = false;
   bool chick4 = false;
   var nameitems= [];
-  var phoneitems = [];
+  var commitems = [];
   var passworditems = [];
-  /*
+  
   Future getData() async{
-    var url=Uri.parse("http://localhost:4000/log");
+    var url=Uri.parse("http://localhost:4000/getcomment");
     Response response= await get(url);
 
     String body =response.body;
@@ -62,16 +63,16 @@ class _HomeState extends State<Home> {
     nameitems.clear();  //to not print the items in litems just print value in mySql colum(name ,phone,..)
     //items.clear();
     for (int i=0; i<list1.length; i++){
-     nameitems.add(list1[i]["u_name"]);
-     phoneitems.add(list1[i]["u_phone"]);
-     passworditems.add(list1[i]["u_password"]);
+     nameitems.add(list1[i]["name"]);
+     commitems.add(list1[i]["comm"]);
+     passworditems.add(list1[i]["password"]);
      
 
      setState(() {
 for (int i=0; i<list1.length; i++){
-        nameitems.add(list1[i]["u_name"]);
-        phoneitems.add(list1[i]["u_phone"]);
-        passworditems.add(list1[i]["u_password"]);
+        nameitems.add(list1[i]["name"]);
+        commitems.add(list1[i]["comm"]);
+        passworditems.add(list1[i]["password"]);
 
       }
       });
@@ -83,7 +84,7 @@ for (int i=0; i<list1.length; i++){
     super.initState();
     getData();
   }
-  */
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -363,32 +364,7 @@ for (int i=0; i<list1.length; i++){
                         ]
                     ),
                   ),
-                  /*
-                  Container(
-                    height: 400,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Servecpost("images/courthouse.png",
-                            translation(context).directorateOfPassports,
-                            translation(context)
-                                .theseServicesOfferThePossibilityOfRegistrationAllowsThePossibilityOfSubmittingAndManagingPassportTransactionsInAnEasyAndEfficientWay),
-                        Servecpost("images/wifi-taxi.png",
-                            translation(context).deliveryService,
-                            translation(context)
-                                .theseServicesOfferThePossibilityOfRegistrationAllowsThePossibilityOfSubmittingAndManagingPassportTransactionsInAnEasyAndEfficientWay),
-                        Servecpost("images/politics.png",
-                            translation(context).passportAcquisitionForm,
-                            translation(context)
-                                .inOrderToOvercomeTheDifficultiesAndFacilitateTheProceduresForObtainingThePassportForTheCitizen),
-                        Servecpost("images/electronserv.png",
-                            translation(context).eServices, translation(context)
-                                .toFacilitateTheMomentumInTheDepartmentsAndToFacilitateDealing),
-                      ],
-                    ),
-                  ),
-
-                   */
+                 
                   Padding(
                     padding: const EdgeInsets.only(
                         top: 30, bottom: 20, left: 5, right: 5),
@@ -406,7 +382,8 @@ for (int i=0; i<list1.length; i++){
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    //height: MediaQuery.of(context).size.height,
+                    height: 680,
+                    
                     child: Column(
                       children: [
                         Padding(
@@ -462,21 +439,13 @@ for (int i=0; i<list1.length; i++){
                     ),
 
                   ),
-                  SizedBox(height: 30,),
-                  //----
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 3,
-                    color: Color(0xff38b0d2),
-                  ),
-                  //General instructions
-                  
-                  
+                 
                   
                 ],
               ),
-
-
+              SizedBox(height: 15,),
+            Text("Comments",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white)),
+               CommentBox(nameitems[index], commitems[index]),
              
 
            
@@ -624,5 +593,60 @@ for (int i=0; i<list1.length; i++){
         ],
       ),
     );
+  }
+  Container CommentBox(String comname, String comtext){
+    return Container(
+                              margin: EdgeInsetsDirectional.all(20),
+                              width: 350, height: 120,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(blurRadius: 9,
+                                        spreadRadius: 7,
+                                        color: Colors.grey.withOpacity(0.6),
+                                        offset: Offset(5,5))
+                                  ]
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 20,bottom: 5,top: 8),
+                                    child: Text(comname,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xff38b0d2),
+                                          fontWeight: FontWeight.bold
+                                      ),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10,bottom: 20),
+                                    child: Text(comtext,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold
+                                      ),),
+                                  ),
+                                  GestureDetector(
+                                    child:  Center(
+                                      child: Text(translation(context).readMore,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold
+                                        ),),
+                                    ),
+                                    onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CommentView()));
+                                },
+                                  )
+                                ],
+                              ),
+                              );
+  
+                            
   }
 }

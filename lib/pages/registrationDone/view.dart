@@ -107,12 +107,7 @@ class _RegistrationDoneState extends State<RegistrationDone> {
         ],
       ),
       backgroundColor: Color(0xff003b57),
-      body: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
+      body:  Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
@@ -122,14 +117,19 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
+                        height: MediaQuery.of(context).size.height-200,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                               topLeft: Radius.circular(40),
                             )),
-                        child: Column(
+                        child:ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
@@ -198,7 +198,8 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                           ),
                              )
                           ],
-                        ),
+                        );
+                        })
                       ),
                       Positioned(
                         top: -50,
@@ -206,8 +207,8 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                         right: 0,
                         child: Center(
                           child: Container(
-                            width: 150,
-                            height: 150,
+                            width: 120,
+                            height: 100,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(75),
                                 image: DecorationImage(
@@ -231,8 +232,7 @@ class _RegistrationDoneState extends State<RegistrationDone> {
                   ),
                 )
               ],
-            );
-          }),
+            )
     );
   }
 }
