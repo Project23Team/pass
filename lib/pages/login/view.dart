@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/classes/language.dart';
 import 'package:myapp/classes/language_constants.dart';
 import 'package:myapp/main.dart';
@@ -227,7 +228,8 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 20,),
                     TextField(
                       controller: phoneController,
-                        maxLength: 11,
+                        maxLength: 15,
+                                  
                         //textAlign: TextAlign.right,
                         cursorColor: Color(0xffffffff),
                         style: const TextStyle(color: Colors.black),

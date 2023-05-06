@@ -4,7 +4,8 @@ import 'package:myapp/pages/home/view.dart';
 import '../../classes/language.dart';
 import '../../classes/language_constants.dart';
 import '../../main.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class ServicesDetails extends StatefulWidget {
   const ServicesDetails({Key? key}) : super(key: key);
 
@@ -149,49 +150,7 @@ class _EservicesState extends State<Eservices> {
 TextEditingController subject = TextEditingController();
 TextEditingController body = TextEditingController();
     final _key = GlobalKey<FormState>();
-sendEMAIL(String subject,String body,String recipientemail)async{
- final Email email = Email(
-  body: body,
-  subject:  subject,
-  recipients: [recipientemail],
-  
-  //cc: ['cc@example.com'],
-  //bcc: ['bcc@example.com'],
-  //attachmentPaths: ['/path/to/attachment.zip'],
-  isHTML: false,
-  );
- //await FlutterEmailSender.send(email);
 
-}
-Future<void> sendEmail(String subject, String body, String recipientEmail) async {
-  final String smtpServerAddress = 'smtp.gmail.com';
-  final String smtpUserName = 'your_gmail_username';
-  final String smtpPassword = 'your_gmail_password';
-  final int smtpPort = 587;
-  final bool isSMTPSecure = true;
-
-  final Email email = Email(
-    body: body,
-    subject: subject,
-    recipients: [recipientEmail],
-    isHTML: false,
-  );
-
-  try {
-    await FlutterEmailSender.send(email,
-    /*
-        smtpServerAddress: smtpServerAddress,
-        smtpUserName: smtpUserName,
-        smtpPassword: smtpPassword,
-        smtpPort: smtpPort,
-        isSMTPSecure: isSMTPSecure
-        */
-        );
-    print("Email sent successfully to $recipientEmail");
-  } catch (error) {
-    print("Error sending email: $error");
-  }
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,144 +225,15 @@ Future<void> sendEmail(String subject, String body, String recipientEmail) async
                             child: Text(translation(context)
                                 .toFacilitateTheMomentumInTheDepartmentsAndToFacilitateDealing,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
                           ),
-                          Form(
-                          key: _key,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: 1,
-                              itemBuilder: (BuildContext context, int i) {
-                                return Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(15),
-                                      child: TextFormField(
-                                        controller: email,
-                                        validator: (email) {
-                                          if (email != null &&
-                                              email.isEmpty) {
-                                            return translation(context)
-                                                .requiredField;
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                            Radius.circular(15),
-                                          )),
-                                          labelText: translation(context).name,
-                                          hintText:
-                                              translation(context).nameHint,
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                   
-                                        Padding(
-                                      padding: const EdgeInsets.all(15),
-                                      child: TextFormField(
-                                        controller: subject,
-                                        validator: (val) {
-                                          if (val != null && val.isEmpty) {
-                                            return translation(context)
-                                                .requiredField;
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                            Radius.circular(15),
-                                          )),
-                                          labelText:
-                                              translation(context).phoneNumber,
-                                          hintText:
-                                              translation(context).phoneNumber,
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                            margin: EdgeInsets.all(8.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 50,right: 50,top: 12,bottom: 12),
-                                        child: TextFormField(
-                                           maxLines: 10,
-                                          controller: body,
-                                          validator: (val) {
-                                            if (val != null && val.isEmpty) {
-                                              return translation(context)
-                                                  .requiredField;
-                                            }
-                                            return null;
-                                          },
-                                          
-                                          decoration: InputDecoration(
-                                            border: const OutlineInputBorder(
-                                                //borderRadius: BorderRadius.all(
-                                             // Radius.circular(30),
-                                            
-                                           //)
-                                            ),
-                                            labelText:
-                                                translation(context).address,
-                                            hintText:
-                                                translation(context).address,
-                                            //suffixStyle: TextStyle(fontSize: 40)
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                       ],
-                                    ),
-                                     Padding(
-                                      padding: const EdgeInsets.only(left: 50,right: 50,top: 12,bottom: 12),
-                                      child: ElevatedButton(
-                                        onPressed: ()  {
+                          TextButton(onPressed: () {calling();}, child: Text(" Phone call")),
+            TextButton(onPressed: () {sms();}, child: Text(" Send sms")),
+            TextButton(onPressed: () {sendEmail();}, child: Text(" Send Emailo")),
+            TextButton(onPressed: () {whatsapp();}, child: Text(" Whatsapp")),
+            TextButton(onPressed: () {messenger();}, child: Text(" Facebook messenger")),
 
-                                            _key.currentState!.save();
-                                            print('${email.text}');
-                                            sendEmail(subject.text, body.text,email.text);
-                                            //name = c_nameController.text;
 
-                                            //phone= c_phoneController.text;
-                                            //comm = c_commController.text;
-                                            //    phone=c_phoneController.text;
-                                           
-                                            //place=placeOforder;
-                                            
-                                           
-                                          
-                                        },
-                                        child: Text("post it !",
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            color: Color(0xffffffff),
-                                          ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                            elevation: 3,
-                                            primary: Color(0xff47B5FF),
-                                            // padding: EdgeInsets.symmetric(horizontal:200, vertical: 20),
-                                            side: BorderSide(
-                                              width: 0,
-                                            ),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                              20,
-                                            ))),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }),
-                        ),
-                      
-                        ],
+
+                          ],
                       ),
                     ),
                     Positioned(
@@ -450,7 +280,74 @@ Future<void> sendEmail(String subject, String body, String recipientEmail) async
       ),
     );
   }
+  calling()async{
+    const url = 'tel:+964775458521';
+    if( await canLaunch(url)){
+      await launch(url);
+    }else{
+      throw 'Could not launch $url';
+    }
+  }
+
+whatsapp()async{
+  const url = "whatsapp://send?phone=+964775458521";
+      if( await canLaunch(url)){
+      await launch(url);
+    }else{
+      throw 'Could not launch $url';
+    }
 }
+
+messenger()async{
+  const url = "http://m.me/xyzchannelxyz";
+     if( await canLaunch(url)){
+      await launch(url);
+    }else{
+      throw 'Could not launch $url';
+    }
+}
+
+sms()async{
+  const url = 'sms:+964775458521';
+
+     if( await canLaunch(url)){
+      await launch(url);
+    }else{
+      throw 'Could not launch $url';
+    }
+}
+
+Future<void> sendEmail() async {
+  final Uri _emailUrl = Uri(
+    scheme: 'mailto',
+    path: 'roaa.waleed4000@gmail.com',
+    queryParameters: {'subject': 'Hello'},
+  );
+
+  if (await canLaunch(_emailUrl.toString())) {
+    await launch(_emailUrl.toString());
+  } else {
+    throw 'Could not launch $_emailUrl';
+  }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class PassportAcquisitionForm extends StatefulWidget {
   const PassportAcquisitionForm({Key? key}) : super(key: key);
@@ -713,3 +610,146 @@ class _FingerprintState extends State<Fingerprint> {
     );
   }
 }
+
+
+
+
+/*
+Form(
+                          key: _key,
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: 1,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: TextFormField(
+                                        controller: email,
+                                        validator: (email) {
+                                          if (email != null &&
+                                              email.isEmpty) {
+                                            return translation(context)
+                                                .requiredField;
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                            Radius.circular(15),
+                                          )),
+                                          labelText: translation(context).name,
+                                          hintText:
+                                              translation(context).nameHint,
+                                          //suffixStyle: TextStyle(fontSize: 40)
+                                        ),
+                                      ),
+                                    ),
+                                   
+                                        Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: TextFormField(
+                                        controller: subject,
+                                        validator: (val) {
+                                          if (val != null && val.isEmpty) {
+                                            return translation(context)
+                                                .requiredField;
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                            Radius.circular(15),
+                                          )),
+                                          labelText:
+                                              translation(context).phoneNumber,
+                                          hintText:
+                                              translation(context).phoneNumber,
+                                          //suffixStyle: TextStyle(fontSize: 40)
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                            margin: EdgeInsets.all(8.0),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 50,right: 50,top: 12,bottom: 12),
+                                        child: TextFormField(
+                                           maxLines: 10,
+                                          controller: body,
+                                          validator: (val) {
+                                            if (val != null && val.isEmpty) {
+                                              return translation(context)
+                                                  .requiredField;
+                                            }
+                                            return null;
+                                          },
+                                          
+                                          decoration: InputDecoration(
+                                            border: const OutlineInputBorder(
+                                                //borderRadius: BorderRadius.all(
+                                             // Radius.circular(30),
+                                            
+                                           //)
+                                            ),
+                                            labelText:
+                                                translation(context).address,
+                                            hintText:
+                                                translation(context).address,
+                                            //suffixStyle: TextStyle(fontSize: 40)
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                       ],
+                                    ),
+                                     Padding(
+                                      padding: const EdgeInsets.only(left: 50,right: 50,top: 12,bottom: 12),
+                                      child: ElevatedButton(
+                                        onPressed: ()  {
+
+                                            _key.currentState!.save();
+                                            print('${email.text}');
+                                            //name = c_nameController.text;
+
+                                            //phone= c_phoneController.text;
+                                            //comm = c_commController.text;
+                                            //    phone=c_phoneController.text;
+                                           
+                                            //place=placeOforder;
+                                            
+                                           
+                                          
+                                        },
+                                        child: Text("post it !",
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            elevation: 3,
+                                            primary: Color(0xff47B5FF),
+                                            // padding: EdgeInsets.symmetric(horizontal:200, vertical: 20),
+                                            side: BorderSide(
+                                              width: 0,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                              20,
+                                            ))),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                        ),
+                      
+                        
+*/

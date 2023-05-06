@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      home: RegistrationDone(status: "1",u_phone: "33"),
+      home: Login(),
     );
   }
 }
